@@ -1,5 +1,5 @@
 resource "aws_security_group" "security_group" {
-  name        = "mate-aws-grafana-sg"
+  name        = "mate-aws-grafana-lab"
   description = "Security group for Grafana lab"
   vpc_id      = var.vpc_id
 
@@ -26,7 +26,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_https" {
 
 resource "aws_vpc_security_group_ingress_rule" "allow_ssh_dynamic" {
   security_group_id = aws_security_group.security_group.id
-  cidr_ipv4         = "${trimspace(data.http.my_public_ip.response_body)}/32"
+  cidr_ipv4         = var.ssh_ingress_cidr_ipv4
   from_port         = 22
   to_port           = 22
   ip_protocol       = "tcp"
